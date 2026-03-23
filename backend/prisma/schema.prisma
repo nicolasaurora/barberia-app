@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Sucursal {
+  id         String     @id @default(uuid())
+  nombre     String
+  direccion  String
+  activa     Boolean    @default(true)
+  createdAt  DateTime   @default(now())
+  barberos   Barbero[]
+  registros  Registro[]
+}
+
+model Barbero {
+  id          String     @id @default(uuid())
+  sucursalId  String
+  nombre      String
+  apellido    String
+  email       String     @unique
+  activo      Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  sucursal    Sucursal   @relation(fields: [sucursalId], references: [id])
+  registros   Registro[]
+  usuario     Usuario?
+}
+
+model Usuario {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  rol       Rol      @default(BARBERO)
+  barberoId String   @unique
+  createdAt DateTime @default(now())
+  barbero   Barbero  @relation(fields: [barberoId], references: [id])
+}
+
+model Servicio {
+  id        String     @id @default(uuid())
+  nombre    String
+  precio    Decimal    @db.Decimal(10, 2)
+  activo    Boolean    @default(true)
+  registros Registro[]
+}
+
+model Registro {
+  id            String   @id @default(uuid())
+  barberoId     String
+  sucursalId    String
+  servicioId    String
+  precioCobrado Decimal  @db.Decimal(10, 2)
+  fecha         DateTime @default(now())
+  createdAt     DateTime @default(now())
+  barbero       Barbero  @relation(fields: [barberoId], references: [id])
+  sucursal      Sucursal @relation(fields: [sucursalId], references: [id])
+  servicio      Servicio @relation(fields: [servicioId], references: [id])
+}
+
+enum Rol {
+  DUENIO
+  BARBERO
+}
