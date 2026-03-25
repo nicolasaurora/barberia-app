@@ -1,14 +1,33 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { login } from '../services/auth.service'
 
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [cargando, setCargando] = useState(false)
+  const { iniciarSesion } = useAuth()
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
-    console.log({ email, password })
+    setCargando(true)
+    try {
+      const datos = await login(email, password)
+      iniciarSesion(datos)
+      if (datos.usuario.rol === 'DUENIO') {
+        navigate('/dashboard')
+      } else {
+        navigate('/cargar-registro')
+      }
+    } catch (error) {
+      setError('Email o contraseña incorrectos.')
+    } finally {
+      setCargando(false)
+    }
   }
 
   return (
@@ -38,7 +57,9 @@ function Login() {
             />
           </div>
           {error && <p className='error'>{error}</p>}
-          <button type='submit'>Ingresar</button>
+          <button type='submit' disabled={cargando}>
+            {cargando ? 'Ingresando...' : 'Ingresar'}
+          </button>
         </form>
       </div>
     </div>
