@@ -16,6 +16,11 @@ const getById = async (id) => {
 }
 
 const create = async (data) => {
+    
+    if (!data.password) {
+        data.password = '123456'
+    }
+    
     if (!data.nombre || !data.apellido || !data.email || !data.sucursalId || !data.password) {
         throw new Error ('Nombre, Apellido, Email, Sucursal y Password son obligatorios.');
     }
