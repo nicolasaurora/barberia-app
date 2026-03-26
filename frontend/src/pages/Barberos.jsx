@@ -4,7 +4,7 @@ import { getAll as getSucursales } from '../services/sucursal.service'
 
 function Barberos() {
   const [barberos, setBarberos] = useState([])
-  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', sucursalId: '', rol: '' })
+  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', sucursalId: '' })
   const [editando, setEditando] = useState(null)
   const [error, setError] = useState('')
   const [sucursales, setSucursales] = useState([]);
@@ -41,7 +41,12 @@ function Barberos() {
       } else {
         await create(form)
       }
-      setForm({ nombre: '', apellido: '', email: '', sucursalId: '', rol: '' })
+      setForm({ 
+        nombre: '', 
+        apellido: '', 
+        email: '', 
+        sucursalId: '', 
+        rol: '' })
       setEditando(null)
       cargarBarberos()
     } catch (error) {
@@ -51,7 +56,12 @@ function Barberos() {
 
   const handleEditar = (barbero) => {
     setEditando(barbero.id)
-    setForm({ nombre: barbero.nombre, apellido: barbero.apellido, email: barbero.email, sucursalId: barbero.sucursalId, rol: barbero.rol })
+    setForm({ 
+      nombre: barbero.nombre, 
+      apellido: barbero.apellido, 
+      email: barbero.email, 
+      sucursalId: barbero.sucursalId 
+    })
   }
 
   const handleEliminar = async (id) => {
@@ -66,7 +76,12 @@ function Barberos() {
 
   const handleCancelar = () => {
     setEditando(null)
-    setForm({ nombre: '', apellido: '', email: '', sucursalId: '', rol: '' })
+    setForm({ 
+      nombre: '', 
+      apellido: '', 
+      email: '', 
+      sucursalId: '', 
+      rol: '' })
     setError('')
   }
 

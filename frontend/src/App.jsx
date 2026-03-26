@@ -3,6 +3,8 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Sucursales from './pages/Sucursales'
 import Barberos from './pages/Barberos'
+import Servicios from './pages/Servicios'
+import Reportes from './pages/Reportes'
 import PrivateRoute from './components/PrivateRoute'
 
 function App() {
@@ -19,11 +21,21 @@ function App() {
           <Sucursales />
         </PrivateRoute>
       } />
+      <Route path='/servicios' element={
+        <PrivateRoute rol='DUENIO'>
+          <Servicios />
+        </PrivateRoute>
+      } />      
       <Route path='/barberos' element={
         <PrivateRoute rol='DUENIO'>
           <Barberos />
         </PrivateRoute>
-      } />      
+      } />
+      <Route path='/reportes' element={
+        <PrivateRoute rol='DUENIO'>
+          <Reportes />
+        </PrivateRoute>
+      } />            
       <Route path='/cargar-registro' element={
         <PrivateRoute rol='BARBERO'>
           <h1>Cargar Registro</h1>

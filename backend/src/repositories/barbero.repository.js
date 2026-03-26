@@ -13,7 +13,7 @@ const create = async (data) => {
 }
 
 const update = async (id, data) => {
-    return await prisma.barbero.update({ where: { id, data }});
+    return await prisma.barbero.update({ where: { id }, data });
 }
 
 const remove = async (id) => {

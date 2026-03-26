@@ -292,3 +292,57 @@ tr:last-child td {
 .btn-danger:hover {
   background-color: #c0392b !important;
 }
+
+.modo-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.modo-selector button {
+  padding: 0.5rem 1.2rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  background-color: #f0f0f0;
+  color: #333;
+  transition: all 0.2s;
+}
+
+.modo-selector button.active {
+  background-color: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+}
+
+.fecha-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.fecha-group .form-group {
+  flex: 1;
+}
+
+.reporte-container {
+  margin-top: 1.5rem;
+}
+
+.reporte-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.reporte-header h3 {
+  font-size: 1.1rem;
+  color: #1a1a1a;
+}
+
+.total {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #1a1a1a;
+}

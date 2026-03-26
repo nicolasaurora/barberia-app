@@ -8,7 +8,7 @@ const getAll = async () => {
 const getById = async (id) => {
     const sucursal = await sucursalRepository.getById(id);
     if (!sucursal) {
-        throw new Error(`Sucursal con ID: ${ id} no encontrada.`);
+        throw new Error(`Sucursal con ID: ${ id } no encontrada.`);
     }
 
     return sucursal
@@ -37,7 +37,7 @@ const remove = async (id) => {
         throw new Error(`Sucursal con ID: ${ id } no encontrada.`);
     }
 
-    return await sucursalRepository.remove(id);
+    return await sucursalRepository.delete(id);
 }
 
 module.exports = { getAll, getById, create, update, remove }

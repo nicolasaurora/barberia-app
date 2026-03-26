@@ -13,11 +13,11 @@ const create = async (data) => {
 }
 
 const update = async (id, data) => {
-    return await prisma.servicio.update({ where: { id, data } });
+    return await prisma.servicio.update({ where: { id }, data });
 }
 
 const remove = async (id) => {
-    return await prisma.servicio.remove({ where: { id } });
+    return await prisma.servicio.delete({ where: { id } });
 }
 
 module.exports = { getAll, getById, create, update, remove }
