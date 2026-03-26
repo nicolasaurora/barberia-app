@@ -5,6 +5,7 @@ import Sucursales from './pages/Sucursales'
 import Barberos from './pages/Barberos'
 import Servicios from './pages/Servicios'
 import Reportes from './pages/Reportes'
+import CargarRegistro from './pages/CargarRegistro'
 import PrivateRoute from './components/PrivateRoute'
 
 function App() {
@@ -35,7 +36,12 @@ function App() {
         <PrivateRoute rol='DUENIO'>
           <Reportes />
         </PrivateRoute>
-      } />            
+      } />
+      <Route path='/cargar-registro' element={
+        <PrivateRoute rol='BARBERO'>
+          <CargarRegistro />
+        </PrivateRoute>
+      } />                  
       <Route path='/cargar-registro' element={
         <PrivateRoute rol='BARBERO'>
           <h1>Cargar Registro</h1>
