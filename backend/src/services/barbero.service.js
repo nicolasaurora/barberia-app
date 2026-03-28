@@ -21,8 +21,8 @@ const create = async (data) => {
         data.password = '123456'
     }
     
-    if (!data.nombre || !data.apellido || !data.email || !data.sucursalId || !data.password) {
-        throw new Error ('Nombre, Apellido, Email, Sucursal y Password son obligatorios.');
+    if (!data.nombre || !data.apellido || !data.email || !data.sucursalId) {
+        throw new Error ('Nombre, Apellido, Email, y Sucursal son obligatorios.');
     }
 
     const rolesValidos = ['DUENIO', 'BARBERO']
