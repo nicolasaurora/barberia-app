@@ -21,7 +21,7 @@ const getById = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    const registro = await registroService.create(req.body, req.usuario)
+    const registro = await servicioService.create(req.body, req.usuario)
     res.status(201).json(registro)
   } catch (error) {
     res.status(400).json({ message: error.message })
