@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import { getAll as getServicios } from '../services/servicio.service'
 import { create, getByBarbero } from '../services/registro.service'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function CargarRegistro() {
   const { usuario, cerrarSesion } = useAuth()
@@ -14,10 +15,16 @@ function CargarRegistro() {
   const [error, setError] = useState('')
   const [exito, setExito] = useState('')
   const [cargando, setCargando] = useState(false)
+  const [formPassword, setFormPassword] = useState({ passwordActual: '', passwordNueva: '', confirmar: '' })
+  const [errorPassword, setErrorPassword] = useState('')
+  const [exitoPassword, setExitoPassword] = useState('') 
 
   const hoy = new Date()
   const desde = new Date(hoy.getFullYear(), hoy.getMonth(), 1).toISOString().split('T')[0]
   const hasta = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0).toISOString().split('T')[0]
+
+ 
+
 
   useEffect(() => {
     cargarDatos()
@@ -62,6 +69,32 @@ function CargarRegistro() {
     navigate('/')
   }
 
+  const handleCambiarPassword = async (e) => {
+    e.preventDefault()
+    setErrorPassword('')
+    setExitoPassword('')
+
+    if (formPassword.passwordNueva !== formPassword.confirmar) {
+      setErrorPassword('Las contraseñas no coinciden.')
+      return
+    }
+
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_API_URL}/auth/cambiar-password`,
+        {
+          passwordActual: formPassword.passwordActual,
+          passwordNueva: formPassword.passwordNueva
+        },
+        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+      )
+      setExitoPassword('Contraseña actualizada correctamente.')
+      setFormPassword({ passwordActual: '', passwordNueva: '', confirmar: '' })
+    } catch (error) {
+      setErrorPassword(error.response?.data?.message || 'Error al cambiar la contraseña.')
+    }
+  }  
+
   return (
     <div className='dashboard-container'>
       <header className='dashboard-header'>
@@ -70,6 +103,13 @@ function CargarRegistro() {
           <span>Hola, {usuario?.barbero?.nombre}</span>
           <button onClick={handleCerrarSesion}>Cerrar sesión</button>
         </div>
+        <div className='header-right'>
+          <span>Hola, {usuario?.barbero?.nombre}</span>
+          <button onClick={() => navigate('/cambiar-password')} className='btn-secondary'>
+            Cambiar contraseña
+          </button>
+          <button onClick={handleCerrarSesion}>Cerrar sesión</button>
+        </div>  
       </header>
 
       <div className='page-container'>
@@ -100,7 +140,6 @@ function CargarRegistro() {
             </button>
           </div>
         </form>
-
         <div className='reporte-container'>
           <div className='reporte-header'>
             <h3>Mis registros del mes</h3>

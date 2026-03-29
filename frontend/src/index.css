@@ -238,8 +238,13 @@ button[type='submit']:hover {
 }
 
 .form-actions button[type='button'] {
-  background-color: #f0f0f0;
-  color: #333;
+  background-color: #333;
+  color: #fff;
+}
+
+.form-actions button[type='button']:hover {
+  background-color: #74db80;
+  color: #1e1f1e;
 }
 
 .table-container {
@@ -445,6 +450,21 @@ tr:last-child td {
     gap: 0.5rem;
     align-items: flex-start;
   }
+
+  .btn-secondary {
+    padding: 0.4rem 1rem;
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background-color: #333;
+  }  
 }
 
 @media (max-width: 480px) {
@@ -468,4 +488,5 @@ tr:last-child td {
     width: 100%;
     justify-content: space-between;
   }
+
 }

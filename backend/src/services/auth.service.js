@@ -44,4 +44,32 @@ const login = async (email, password) => {
   }
 }
 
-module.exports = { login }
+const cambiarPassword = async (usuarioId, passwordActual, passwordNueva) => {
+  if (!passwordActual || !passwordNueva) {
+    throw new Error('La contraseña actual y la nueva son obligatorias.')
+  }
+
+  if (passwordNueva.length < 6) {
+    throw new Error('La nueva contraseña debe tener al menos 6 caracteres.')
+  }
+
+  const usuario = await prisma.usuario.findUnique({ where: { id: usuarioId } })
+  if (!usuario) {
+    throw new Error('Usuario no encontrado.')
+  }
+
+  const passwordValida = await bcrypt.compare(passwordActual, usuario.password)
+  if (!passwordValida) {
+    throw new Error('La contraseña actual es incorrecta.')
+  }
+
+  const passwordEncriptada = await bcrypt.hash(passwordNueva, 10)
+  await prisma.usuario.update({
+    where: { id: usuarioId },
+    data: { password: passwordEncriptada }
+  })
+
+  return { message: 'Contraseña actualizada correctamente.' }
+}
+
+module.exports = { login, cambiarPassword }

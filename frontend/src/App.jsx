@@ -7,6 +7,7 @@ import Servicios from './pages/Servicios'
 import Reportes from './pages/Reportes'
 import CargarRegistro from './pages/CargarRegistro'
 import PrivateRoute from './components/PrivateRoute'
+import CambiarPassword from './pages/CambiarPassword'
 
 function App() {
   return (
@@ -47,6 +48,11 @@ function App() {
           <h1>Cargar Registro</h1>
         </PrivateRoute>    
         } />
+      <Route path='/cambiar-password' element={
+        <PrivateRoute rol='BARBERO'>
+          <CambiarPassword />
+        </PrivateRoute>    
+        } />        
     </Routes>
   )
 }
